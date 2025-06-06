@@ -1,0 +1,16 @@
+<h2>Server Liste</h2>
+<form (ngSubmit)="addServer()" #serverForm="ngForm">
+  <input type="text" [(ngModel)]="newServer.name" name="name" placeholder="Name" required>
+  <input type="text" [(ngModel)]="newServer.host" name="host" placeholder="Host" required>
+  <input type="number" [(ngModel)]="newServer.port" name="port" placeholder="Port" required>
+  <input type="password" [(ngModel)]="newServer.password" name="password" placeholder="Passwort">
+  <button type="submit">Hinzufügen</button>
+</form>
+<ul>
+  <li *ngFor="let s of servers">
+    <span [style.color]="'green'">●</span>
+    {{s.name}} ({{s.host}}:{{s.port}})
+    <button (click)="open(s)">Öffnen</button>
+    <button (click)="deleteServer(s.id)">Löschen</button>
+  </li>
+</ul>

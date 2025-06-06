@@ -1,0 +1,6 @@
+<h2>{{server?.name}}</h2>
+<div class="log">
+  <div *ngFor="let line of log">{{line}}</div>
+</div>
+<input type="text" [(ngModel)]="command" (keyup.enter)="send()" placeholder="Command">
+<button (click)="send()">Senden</button>
