@@ -29,3 +29,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## GitHub Pages
 
 The CI workflow builds the project and deploys it to **GitHub Pages**. After merging to `main`, the site is available at `https://<your-user>.github.io/<repository>/`.
+
+## CI/CD
+
+This repository includes a GitHub Actions workflow that builds and tests the
+Angular application using Node.js 16. On every push to `main` the workflow
+publishes the contents of `dist/minecraft-rcon-client` to GitHub Pages.
