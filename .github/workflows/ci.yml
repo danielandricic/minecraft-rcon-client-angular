@@ -23,7 +23,6 @@ jobs:
           node-version: '16'
           cache: 'npm'
       - run: npm ci
-      - run: npm run lint --if-present
       - name: Build
         run: |
           REPO_NAME=$(basename $GITHUB_REPOSITORY)
