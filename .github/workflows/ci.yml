@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: |
           REPO_NAME=$(basename $GITHUB_REPOSITORY)
-          npm run build -- --configuration production --base-href /$REPO_NAME/
+          npm run build --configuration production --base-href /$REPO_NAME/
       - run: |
           sudo apt-get update
           sudo apt-get install -y chromium-browser xvfb
