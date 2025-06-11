@@ -3,14 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node --openssl-legacy-provider ./node_modules/@angular/cli/bin/ng serve",
     "build": "node --openssl-legacy-provider ./node_modules/@angular/cli/bin/ng build",
     "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~11.2.6",
-    "@angular/cli": "^20.0.2",
     "@angular/common": "~11.2.6",
     "@angular/compiler": "~11.2.6",
     "@angular/core": "~11.2.6",
@@ -24,6 +23,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.5",
+    "@angular/cli": "~11.2.6",
     "@angular/compiler-cli": "~11.2.6",
     "@types/node": "^18.0.0",
     "codelyzer": "^6.0.0",
