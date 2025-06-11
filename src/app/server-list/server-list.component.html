@@ -1,0 +1,16 @@
+<h2>Servers</h2>
+<form #f="ngForm" (ngSubmit)="addServer()" class="form">
+  <input name="name" [(ngModel)]="newServer.name" placeholder="Name" required>
+  <input name="host" [(ngModel)]="newServer.host" placeholder="Host" required>
+  <input name="port" type="number" [(ngModel)]="newServer.port" placeholder="Port" required>
+  <button type="submit" [disabled]="f.invalid">Add</button>
+</form>
+
+<ul>
+  <li *ngFor="let server of servers$ | async">
+    <span [style.color]="server.isOnline ? 'green' : 'red'">&#9679;</span>
+    {{server.name}} ({{server.host}}:{{server.port}})
+    <a [routerLink]="['/servers', server.id]">Open</a>
+    <button (click)="deleteServer(server.id)">Delete</button>
+  </li>
+</ul>

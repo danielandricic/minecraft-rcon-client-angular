@@ -1,0 +1,8 @@
+<div *ngIf="server; else missing">
+  <h2>{{server.name}}</h2>
+  <div class="log" *ngFor="let line of logs">{{line}}</div>
+  <button (click)="disconnect()" *ngIf="server.isOnline">Disconnect</button>
+</div>
+<ng-template #missing>
+  <p>Server not found.</p>
+</ng-template>
