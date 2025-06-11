@@ -66,21 +66,10 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "minecraft-rcon-client:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "minecraft-rcon-client:build:production"
-            }
-          }
+          "builder": "@angular-devkit/build-angular:dev-server"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "minecraft-rcon-client:build"
-          }
+          "builder": "@angular-devkit/build-angular:extract-i18n"
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -95,6 +84,5 @@
         }
       }
     }
-  },
-  "defaultProject": "minecraft-rcon-client"
+  }
 }
