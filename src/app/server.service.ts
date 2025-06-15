@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import {any} from 'codelyzer/util/function';
 
 export interface Server {
   id?: string;
@@ -18,8 +19,12 @@ export class ServerService {
 
   constructor(private http: HttpClient) {}
 
-  getServers(): Observable<Server[]> {
-    return this.http.get<Server[]>(`${environment.apiUrl}/servers`);
+  getServers(): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.apiUrl}/servers`);
+  }
+
+  getServer(name: string): Observable<Server> {
+    return this.http.get<Server>(`${environment.apiUrl}/server/${name}`);
   }
 
   addServer(server: Server): Observable<Server> {

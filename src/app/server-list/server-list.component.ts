@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Server, ServerService } from '../server.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-server-list',
@@ -16,7 +17,7 @@ import { Server, ServerService } from '../server.service';
 
     <ul>
       <li *ngFor="let s of servers">
-        {{s.name}} ({{s.host}}:{{s.port}})
+        {{s}}
         <button (click)="connect(s)">Connect</button>
         <button (click)="delete(s)">Delete</button>
       </li>
@@ -27,7 +28,7 @@ import { Server, ServerService } from '../server.service';
 })
 export class ServerListComponent implements OnInit {
 
-  servers: Server[] = [];
+  servers: string[] = [];
   newServer: Server = { name: '', host: '', port: 25575, password: '' };
 
   constructor(private serverService: ServerService, private router: Router) { }
@@ -40,6 +41,10 @@ export class ServerListComponent implements OnInit {
     this.serverService.getServers().subscribe(s => this.servers = s);
   }
 
+  getServer(name: string): Observable<Server> {
+    return this.serverService.getServer(name);
+  }
+
   addServer(): void {
     this.serverService.addServer(this.newServer).subscribe(() => {
       this.newServer = { name: '', host: '', port: 25575, password: '' };
@@ -47,12 +52,22 @@ export class ServerListComponent implements OnInit {
     });
   }
 
-  delete(server: Server): void {
+  delete(serverName: string): void {
+    const server: Server = {host: '', name: '', password: '', port: 0};
+    this.serverService.getServer(serverName).subscribe(serverSub => {
+      return server;
+    });
+
     if (!server.id) { return; }
     this.serverService.deleteServer(server.id).subscribe(() => this.load());
   }
 
-  connect(server: Server): void {
+  connect(serverName: string): void {
+    const server: Server = {host: '', name: '', password: '', port: 0};
+    this.serverService.getServer(serverName).subscribe(serverSub => {
+      return server;
+    });
+
     if (!server.id) { return; }
     this.router.navigate(['/servers', server.id]);
   }
