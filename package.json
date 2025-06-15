@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "node --openssl-legacy-provider ./node_modules/@angular/cli/bin/ng serve",
     "build": "node --openssl-legacy-provider ./node_modules/@angular/cli/bin/ng build",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "api": "node server/server.js"
   },
   "private": true,
   "dependencies": {
@@ -17,8 +18,12 @@
     "@angular/platform-browser": "~11.2.6",
     "@angular/platform-browser-dynamic": "~11.2.6",
     "@angular/router": "~11.2.6",
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "rcon-client": "^4.2.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
+    "ws": "^8.18.2",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
