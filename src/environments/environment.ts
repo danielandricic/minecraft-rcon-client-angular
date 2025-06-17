@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: (window as any)?.env?.API_URL || 'http://localhost:5210/api'
+  apiUrl: (window as any)?.env?.API_URL || 'http://andricic.at:5000/api'
 };
 
 /*

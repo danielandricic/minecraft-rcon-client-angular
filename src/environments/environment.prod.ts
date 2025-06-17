@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: (window as any)?.env?.API_URL || 'http://localhost:5210'
+  apiUrl: (window as any)?.env?.API_URL || 'http://andricic.at:5000/api'
 };
