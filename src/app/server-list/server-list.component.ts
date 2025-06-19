@@ -63,13 +63,7 @@ export class ServerListComponent implements OnInit {
   }
 
   connect(serverName: string): void {
-    const server: Server = {host: '', name: '', password: '', port: 0};
-    this.serverService.getServer(serverName).subscribe(serverSub => {
-      return server;
-    });
-
-    if (!server.id) { return; }
-    this.router.navigate(['/servers', server.id]);
+    this.router.navigate(['/servers', serverName]);
   }
 
 }

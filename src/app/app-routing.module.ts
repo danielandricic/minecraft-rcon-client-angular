@@ -6,7 +6,7 @@ import { TerminalComponent } from './terminal/terminal.component';
 
 const routes: Routes = [
   { path: '', component: ServerListComponent },
-  { path: 'servers/:id', component: TerminalComponent }
+  { path: 'servers/:name', component: TerminalComponent }
 ];
 
 @NgModule({

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { Observable } from 'rxjs';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { Observable, Subject } from 'rxjs';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 
 export interface Server {
   id?: string;
@@ -14,7 +14,9 @@ export interface Server {
 
 @Injectable({ providedIn: 'root' })
 export class ServerService {
-  private socket?: WebSocketSubject<any>;
+  private connection?: HubConnection;
+  private serverName = '';
+  private messageSubject = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -34,20 +36,44 @@ export class ServerService {
     return this.http.delete<void>(`${environment.apiUrl}/servers/${id}`);
   }
 
-  connect(id: string): void {
-    this.socket = webSocket(`${environment.apiUrl.replace('http', 'ws')}/servers/${id}/rcon`);
+  connect(name: string): void {
+    this.serverName = name;
+    const hubUrl = environment.apiUrl.replace(/\/api\/?$/, '') + '/rconHub';
+    this.connection = new HubConnectionBuilder()
+      .withUrl(hubUrl, { withCredentials: true })
+      .withAutomaticReconnect()
+      .build();
+
+    this.connection.on('Log', (_: string, message: string) => {
+      this.messageSubject.next(message);
+    });
+
+    this.connection.on('Response', (_: string, resp: string) => {
+      this.messageSubject.next(resp);
+    });
+
+    this.connection.on('Error', (err: string) => {
+      this.messageSubject.next('Error: ' + err);
+    });
+
+    this.connection.start()
+      .then(() => this.connection?.invoke('ConnectToServer', this.serverName))
+      .catch(err => this.messageSubject.next('Error: ' + err.toString()));
   }
 
   sendCommand(cmd: string): void {
-    this.socket?.next(cmd);
+    if (!this.connection) { return; }
+    this.connection.invoke('SendCommand', this.serverName, cmd)
+      .catch(err => this.messageSubject.next('Error: ' + err.toString()));
   }
 
-  onMessage(): Observable<any> | undefined {
-    return this.socket?.asObservable();
+  onMessage(): Observable<string> {
+    return this.messageSubject.asObservable();
   }
 
   disconnect(): void {
-    this.socket?.complete();
-    this.socket = undefined;
+    this.connection?.stop();
+    this.connection = undefined;
+    this.serverName = '';
   }
 }

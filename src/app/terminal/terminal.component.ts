@@ -22,18 +22,16 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
   messages: string[] = [];
   command = '';
-  private id = '';
+  private name = '';
   private sub?: Subscription;
 
   constructor(private route: ActivatedRoute, private service: ServerService) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id') || '';
-    this.service.connect(this.id);
+    this.name = this.route.snapshot.paramMap.get('name') || '';
+    this.service.connect(this.name);
     const obs = this.service.onMessage();
-    if (obs) {
-      this.sub = obs.subscribe(m => this.messages.push(m));
-    }
+    this.sub = obs.subscribe(m => this.messages.push(m));
   }
 
   send(): void {
