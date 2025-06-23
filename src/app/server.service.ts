@@ -48,6 +48,10 @@ export class ServerService {
       this.messageSubject.next(message);
     });
 
+    this.connection.on('ReceiveMessage', (msg: string) => {
+      this.messageSubject.next(msg);
+    });
+
     this.connection.on('Response', (_: string, resp: string) => {
       this.messageSubject.next(resp);
     });
