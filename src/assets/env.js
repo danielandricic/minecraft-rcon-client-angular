@@ -1,2 +1,2 @@
 window['env'] = window['env'] || {};
-window['env']['API_URL'] = 'http://localhost:5210/api';
+window['env']['API_URL'] = 'https://api.andricic.at/api';
